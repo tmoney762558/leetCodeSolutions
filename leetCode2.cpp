@@ -18,10 +18,7 @@ public:
         long long mult = 1;
         std::stack<int> stk;
 
-        if (l1->val == 0) {
-            l1Val = 0;
-        } else {
-
+        if (l1->val != 0) {
             while (current != NULL) {
                 stk.push(current->val);
                 current = current->next;
@@ -33,10 +30,10 @@ public:
                 mult *= 10;
             }
         }
-        if (l2->val == 0) {
-            l2Val = 0;
-        } else {
-            current = l2;
+
+        mult = 1;
+        current = l2;
+        if (l2->val != 0) {
             while (current != NULL) {
                 stk.push(current->val);
                 current = current->next;
@@ -47,31 +44,35 @@ public:
                 stk.pop();
                 mult *= 10;
             }
-            
-            int l3Val = l1Val + l2Val;
+        }
 
-            while (l3Val != 0)
-            {   
-                if (l3 == NULL)
-                {
-                    l3 = new ListNode;
-                    l3->val = l3Val % 10;
-                    l3->next = NULL;
-                    current = l3;
-                }
+        int l3Val = l1Val + l2Val;
 
-                else
-                {
-                    ListNode* newNode = new ListNode;
-                    newNode->val = l3Val % 10;
-                    newNode->next = NULL;
-                    current->next = newNode;
-                    current = current->next;
-                    current->next = NULL;
-                }
+        if (l3Val == 0) {
+            l3 = new ListNode;
+            l3->val = 0;
+            l3->next = NULL;
+            return l3;
+        }
 
-                l3Val /= 10;
+        while (l3Val != 0) {
+            if (l3 == NULL) {
+                l3 = new ListNode;
+                l3->val = l3Val % 10;
+                l3->next = NULL;
+                current = l3;
             }
+
+            else {
+                ListNode* newNode = new ListNode;
+                newNode->val = l3Val % 10;
+                newNode->next = NULL;
+                current->next = newNode;
+                current = current->next;
+                current->next = NULL;
+            }
+
+            l3Val /= 10;
         }
         return l3;
     }
